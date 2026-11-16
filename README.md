@@ -71,6 +71,26 @@ deliberately not a parser abstraction layer.
 
 None. The crate has no optional dependencies.
 
+## Releasing
+
+Releases are automated with [release-plz](https://release-plz.dev):
+
+- Commits to `main` follow [Conventional Commits](https://www.conventionalcommits.org)
+  (`fix:`, `feat:`, `feat!:` or `BREAKING CHANGE:`).
+- On every push, release-plz opens or updates a release PR that bumps `Cargo.toml` and updates
+  `CHANGELOG.md`. While the crate is pre-1.0, features bump the patch version and breaking changes
+  bump the minor version, per Cargo's semver rules.
+- Merging the release PR creates the `vX.Y.Z` tag, the GitHub release and runs `cargo publish`.
+
+Required repository secrets:
+
+- `RELEASE_PLZ_TOKEN` — a PAT with `contents: write` and `pull-requests: write`. Using a PAT
+  instead of the default `GITHUB_TOKEN` lets CI run on the release PR and lets release-plz push
+  the tag.
+- `CARGO_REGISTRY_TOKEN` — crates.io API token.
+
+Configuration lives in `release-plz.toml`. `semver_check` is enabled: release-plz runs `cargo-semver-checks` (installed by the action) and bumps the version when it detects an API break.
+
 ## License
 
 MIT
