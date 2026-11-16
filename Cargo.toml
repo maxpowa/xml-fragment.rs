@@ -1,0 +1,22 @@
+[package]
+name = "xml-fragment"
+version = "0.1.0"
+description = "Opaque, re-emittable XML subtrees for serde documents parsed with quick-xml"
+license = "MIT"
+repository = "https://github.com/maxpowa/xml-fragment"
+homepage = "https://github.com/maxpowa/xml-fragment"
+readme = "README.md"
+documentation = "https://docs.rs/xml-fragment"
+keywords = ["xml", "serde", "quick-xml", "fragment", "serde-xml"]
+categories = ["encoding", "parser-implementations"]
+edition = "2021"
+rust-version = "1.75"
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+must_use_candidate = "allow"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+quick-xml = { version = "0.42.0", features = ["serialize"] }
