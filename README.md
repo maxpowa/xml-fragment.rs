@@ -82,12 +82,16 @@ Releases are automated with [release-plz](https://release-plz.dev):
   bump the minor version, per Cargo's semver rules.
 - Merging the release PR creates the `vX.Y.Z` tag, the GitHub release and runs `cargo publish`.
 
-Required repository secrets:
+Required repository configuration (see the
+[release-plz quickstart](https://release-plz.dev/docs/github/quickstart)):
 
-- `RELEASE_PLZ_TOKEN` — a PAT with `contents: write` and `pull-requests: write`. Using a PAT
-  instead of the default `GITHUB_TOKEN` lets CI run on the release PR and lets release-plz push
-  the tag.
-- `CARGO_REGISTRY_TOKEN` — crates.io API token.
+- **Settings -> Actions -> General -> Workflow permissions**: enable
+  *Allow GitHub Actions to create and approve pull requests*.
+- `RELEASE_PLZ_TOKEN` - a fine-grained PAT for this repository with **Contents** and
+  **Pull requests** read/write. Using a PAT instead of the default `GITHUB_TOKEN` lets CI run on
+  the release PR and lets release-plz push the tag. If unset, the workflows fall back to
+  `GITHUB_TOKEN`, but then release PRs won't trigger CI.
+- `CARGO_REGISTRY_TOKEN` - crates.io API token with the `publish-new` and `publish-update` scopes.
 
 Configuration lives in `release-plz.toml`. `semver_check` is enabled: release-plz runs `cargo-semver-checks` (installed by the action) and bumps the version when it detects an API break.
 
